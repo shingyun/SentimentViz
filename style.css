@@ -1,0 +1,31 @@
+
+body{
+	background:rgb(252,252,252);
+}
+
+.line_Clinton {
+/*	stroke:rgb(80,80,80);*/
+	fill:none;
+/*	stroke-width:1px;*/
+}
+.area_Clinton {
+	fill-opacity:.6;
+}
+
+.line_Trump {
+	stroke:rgb(80,80,80);
+	fill:none;
+	stroke-width:1px;
+}
+
+.area_Trump {
+	fill-opacity:.6;
+}
+
+.axis-y .tick line{
+	stroke:gray;
+	stroke-width:0.2px;
+}
+.axis-y .domain{
+	display:none;
+}
