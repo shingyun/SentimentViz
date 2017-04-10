@@ -2,17 +2,39 @@
 <html>
 <head>
     <title></title>
+    <meta charset="utf-8">
     <link href="./lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="global.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
-    <h1>Fake News</h1>
+    <h2>Visualizing Sentiment of Fake News Articles</h2>
+    <div class='intro'>
+        <p>Brush and explore + introduction</p>
+    </div>
     <section class="canvas" id="canvas">
-    <div class='plot1' id='plot1'></div>
-    <div class='plot2' id='plot2'></div>
+    <button type="button" class="btn btn-default btnT">Hide Trump</button>
+    <button type="button" class="btn btn-default btnC">Hide Clinton</button>
+    <div class='draw plot1' id='plot1'>
+        <h4>Article Count from 04/01/2016 – 03/31/2017</h4>
+    </div>
+    <div class='draw plot2' id='plot2'>
+        <h4>Semtiment Spectrum from Positive(>0) to Negative(<0)</h4>
+        <div class='score'>Score</div>
+    </div>
     </section>
+    <div class='plot3' id='plot3'>
+    	<div class='list titleT'>
+    	    <h4>Trump</h4>
+    		<ol class='olTrump'></ol>
+    	</div>
+    	<div class='list titleC'>
+    	    <h4>Clinton</h4>
+    		<ol class='olClinton'></ol>
+    	</div>
+    </div>
+    
 </div>
 
 

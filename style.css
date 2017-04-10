@@ -1,12 +1,16 @@
 
-body{
-	background:rgb(252,252,252);
+body {
+	background-color: #D6D6D6;
+}
+
+.canvas {
+	width: 70%;
 }
 
 .line_Clinton {
 /*	stroke:rgb(80,80,80);*/
 	fill:none;
-/*	stroke-width:1px;*/
+	stroke-width:2px;
 }
 .area_Clinton {
 	fill-opacity:.6;
@@ -15,12 +19,29 @@ body{
 .line_Trump {
 	stroke:rgb(80,80,80);
 	fill:none;
-	stroke-width:1px;
+	stroke-width:2px;
 }
 
 .area_Trump {
 	fill-opacity:.6;
 }
+
+.axis-yT .tick line{
+	stroke:gray;
+	stroke-width:0.2px;
+}
+.axis-yT .domain{
+	display:none;
+}
+
+.axis-yC .tick line{
+	stroke:gray;
+	stroke-width:0.2px;
+}
+.axis-yC .domain{
+	display:none;
+}
+
 
 .axis-y .tick line{
 	stroke:gray;
@@ -28,4 +49,50 @@ body{
 }
 .axis-y .domain{
 	display:none;
+
+}
+
+.axisx-count .domain{
+	display:none;
+}
+
+.axisx-count .tick line{
+	stroke-width:0px;
+}
+
+
+.plot3 {
+	position: absolute;
+	right: 20px;
+	top:150px;
+	width: 400px;
+	height: 600px;
+}
+
+.olTrump{
+	width: 400px;
+	height: 350px;
+	overflow:hidden; 
+	overflow-y:scroll;
+	font-size: 12px;
+	left: 10px;
+}
+
+.olClinton{
+    width: 400px;
+	height: 350px;
+	overflow:hidden; 
+	overflow-y:scroll;
+	font-size: 12px;
+	left: 10px;
+}
+
+.selected{
+	color: green;
+}
+
+
+.highlighted {
+	stroke: green;
+	stroke-width: 5px;
 }
