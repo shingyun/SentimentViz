@@ -102,13 +102,6 @@ function drawTimeline(plot, clinton, trump){
       .style('opacity',1)
       .attr('d',areaC);
 
-  // var lineNodeC = plot
-  //     .selectAll('.line_Clinton')
-  //     .data([histogramDate(clinton)])
-  //     .enter()
-  //     .append('path').attr('class','line_Clinton')
-  //     .attr('d',line);
-
 //  draw Trump
   var areaNodeT = plot.selectAll('.area_Trump')
       .data([histogramDate(trump)])//UPDATE
@@ -117,15 +110,6 @@ function drawTimeline(plot, clinton, trump){
       .style('fill','#E91D0E')
       .style('opacity',1)
       .attr('d',areaT);
-
-  // var lineNodeT = plot
-  //     .selectAll('.line_Trump')
-  //     .data([histogramDate(trump)])
-  //     .enter()
-  //     .append('path').attr('class','line_Trump')
-  //     .attr('d',line)
-  //     .style('strok-width','2px')
-  //     .style('stroke','#E91D0E');
 
     //Refer to API here: https://github.com/d3/d3-brush
   var brush = d3.brushX()
@@ -158,6 +142,40 @@ function drawTimeline(plot, clinton, trump){
    
     drawSentiment(plot2,brushedClinton, brushedTrump, brushedArea);
     listTitle(plot3,brushedClinton,brushedTrump);
+    
+    //button Trump
+    d3.select('.btnT')
+      .on('click',function(d){
+     
+         if(d3.select(this).classed('hidedBtnT')){
+              d3.select(this).classed('hidedBtnT',false)
+                .html('Hide Trump');
+              d3.selectAll('.sent_Trump').style('opacity',0.7);
+
+           }else{
+              d3.select(this).classed('hidedBtnT',true)
+                .html('Show Trump');
+              d3.selectAll('.sent_Trump').style('opacity',0);
+              
+           }
+    })//btnT
+
+    //button Clinton
+    d3.select('.btnC')
+      .on('click',function(d){
+     
+         if(d3.select(this).classed('hidedBtnC')){
+              d3.select(this).classed('hidedBtnC',false)
+                .html('Hide Clinton');
+              d3.selectAll('.sent_Clinton').style('opacity',0.7);
+
+           }else{
+              d3.select(this).classed('hidedBtnC',true)
+                .html('Show Clinton');
+              d3.selectAll('.sent_Clinton').style('opacity',0);
+              
+           }
+    })//btnC
 
   }
  
@@ -192,7 +210,16 @@ function drawTimeline(plot, clinton, trump){
 }
 
 
+
 function drawSentiment(plot,clinton,trump, brush){
+
+   d3.select('.btnT')
+     .classed('hidedBtnT',false)
+     .html('Hide Trump');
+
+   d3.select('.btnC')
+     .classed('hidedBtnC',false)
+     .html('Hide Clinton');
 
    d3.select('.axis-x').remove();
 
@@ -304,6 +331,7 @@ simulationT
         .force('positionY',forceY)
         .force('collide',collide)
         .alpha(1)
+        .restart()
         .on('tick',function(){
           
           plot.selectAll('.sent_Trump')
@@ -363,7 +391,9 @@ function listTitle(plot,clinton,trump){
 
         d3.selectAll('.sent_Trump')
           .filter(function(d){return e==d.id;})
-          .classed('highlighted',true);
+          .classed('highlightedT',true)
+          // .transition()
+          .attr('r',15);
 
         d3.selectAll('.score')
           .html('Score: '+d.sentiment);
@@ -375,7 +405,8 @@ function listTitle(plot,clinton,trump){
       .classed('selected',false);
 
     d3.selectAll('.sent_Trump')
-      .classed('highlighted',false);
+      .classed('highlightedT',false)
+      .attr('r',5);
     
     d3.selectAll('.score')
       .html('Score');
@@ -409,7 +440,9 @@ function listTitle(plot,clinton,trump){
 
       d3.selectAll('.sent_Clinton')
         .filter(function(d){return e==d.id;})
-        .classed('highlighted',true);
+        .classed('highlightedC',true)
+        // .transition()
+        .attr('r',15);
      });//dispatch.on
 
   })
@@ -418,7 +451,8 @@ function listTitle(plot,clinton,trump){
       .classed('selected',false);
     
     d3.selectAll('.sent_Clinton')
-      .classed('highlighted',false);
+      .classed('highlightedC',false)
+      .attr('r',5);
     
     d3.selectAll('.score')
       .html('Score');

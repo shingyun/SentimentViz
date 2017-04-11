@@ -64,13 +64,13 @@ body {
 .plot3 {
 	position: absolute;
 	right: 20px;
-	top:150px;
+	top:100px;
 	width: 400px;
 	height: 600px;
 }
 
 .olTrump{
-	width: 400px;
+	width: 350px;
 	height: 350px;
 	overflow:hidden; 
 	overflow-y:scroll;
@@ -79,7 +79,7 @@ body {
 }
 
 .olClinton{
-    width: 400px;
+    width: 350px;
 	height: 350px;
 	overflow:hidden; 
 	overflow-y:scroll;
@@ -88,11 +88,23 @@ body {
 }
 
 .selected{
-	color: green;
+	color: #3AB795;
+	font-weight: bold;
 }
 
 
-.highlighted {
-	stroke: green;
+.highlightedT{
+	stroke: #3AB795;
 	stroke-width: 5px;
+}
+
+
+.highlightedC{
+	stroke: #3AB795;
+	stroke-width: 5px;
+}
+
+.btn{
+    border: none;
+    opacity: 0.8;
 }
