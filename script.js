@@ -9,16 +9,16 @@ var w = outerWidth - m.l - m.r,
 var plot1 = d3.select('.plot1')
     .append('svg')
     .attr('width',outerWidth)
-    .attr('height',outerHeight/7*4)
+    .attr('height',outerHeight/5*3)
     .append('g')
-    .attr('transform','translate(' + m.l + ',' + m.t + ')');
+    .attr('transform','translate(' + m.l + ',10)');
 
 var plot2 = d3.select('.plot2')
     .append('svg')
     .attr('width',outerWidth)
-    .attr('height',outerHeight)
+    .attr('height',outerHeight/7*2)
     .append('g')
-    .attr('transform','translate(' + m.l + ',0)');
+    .attr('transform','translate(' + m.l + ',20)');
 
 var plot3titleT = d3.select('.plot3')
     .select('.titleT');
@@ -35,10 +35,13 @@ d3.queue()
   .await(dataLoaded);
 
 function dataLoaded(err, clinton, trump){
+ 
+  var t0 = new Date(2016,3,1), t1 = new Date(2017,2,31),
+      brushAll = [t0,t1];
 
- drawTimeline(plot1,clinton,trump);
- // startSentiment(plot2,clinton, trump);
- listTitle(plot3,clinton,trump);
+  drawTimeline(plot2,clinton,trump);
+  drawSentiment(plot1,clinton, trump,brushAll);
+  listTitle(plot3,clinton,trump);
 
      //button Trump
     d3.select('.btnT')
@@ -101,21 +104,23 @@ function drawTimeline(plot, clinton, trump){
 
   var scaleYcountT = d3.scaleLinear()
       .domain([0,9])
-      .range([h/4,20]);
+      .range([50,0]);
+
+  console.log(h/8);
 
   var scaleYcountC = d3.scaleLinear()
       .domain([13,0])
-      .range([h/2,h/4]);
+      .range([125,50]);
 
   var areaT = d3.area()
     .x(function(d){return scaleXtime(new Date((d.x1.valueOf()+d.x0.valueOf())/2))})
     .y1(function(d){return scaleYcountT(d.length)})
-    .y0(h/4);
+    .y0(50);
 
   var areaC = d3.area()
     .x(function(d){return scaleXtime(new Date((d.x1.valueOf()+d.x0.valueOf())/2))})
     .y0(function(d){return scaleYcountC(d.length)})
-    .y1(h/4);
+    .y1(50);
 
 //  draw Clinton
   var areaNodeC = plot.selectAll('.area_Clinton')
@@ -164,7 +169,7 @@ function drawTimeline(plot, clinton, trump){
         .filterRange(brushedArea)
         .top(Infinity);
    
-    drawSentiment(plot2,brushedClinton, brushedTrump, brushedArea);
+    drawSentiment(plot1,brushedClinton, brushedTrump, brushedArea);
     listTitle(plot3,brushedClinton,brushedTrump);
     
   }
@@ -188,7 +193,7 @@ function drawTimeline(plot, clinton, trump){
       .scale(scaleYcountC);
 
   plot.append('g').attr('class','axis axisx-count')
-    .attr('transform','translate(0,0)')
+    .attr('transform','translate(0,140)')
     .call(xAxis);
   plot.insert('g','.area_Trump').attr('class','axis axis-yT') //line is "inserted" before area
     .call(yAxisT);
@@ -418,7 +423,7 @@ function drawSentiment(plot,clinton,trump, brush){
 
    var scaleYsent = d3.scaleLinear()
        .domain([-0.5, 0.6])
-       .range([h/1.75,0]);
+       .range([h/2,0]);
 
    var nodeC = plot.selectAll('.sent_Clinton')
        .data(clinton);
@@ -431,10 +436,6 @@ function drawSentiment(plot,clinton,trump, brush){
             d3.select(this).classed('highlightedC',true)
               .attr('r',15);
 
-             
-
-
-
              dispatch.call('highlight',this,d.id);
              dispatch.on('highlight.sentClinton',function(e){
               
@@ -443,9 +444,8 @@ function drawSentiment(plot,clinton,trump, brush){
                   return e==d.id;})
                  .classed('selectedC',true);
 
-               var li = document.getElementById(e);
-              li.scrollIntoView(true);
-
+              //  var li = document.getElementById(e);
+              // li.scrollIntoView(true);
 
                d3.selectAll('.score')
                  .html('Score: '+d.sentiment);
@@ -590,7 +590,7 @@ function drawSentiment(plot,clinton,trump, brush){
 
   plot.append('g')
       .attr('class','axis axis-x')
-      .attr('transform','translate(0,'+(h/1.75)+')')
+      .attr('transform','translate(0,'+(h/2+10)+')')
       .call(xAxis);
   plot.insert('g','circle').attr('class','axis axis-y') //line is "inserted" before area
       .attr('transform','translate(0,0)') 

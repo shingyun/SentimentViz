@@ -7,23 +7,14 @@ body {
 	width: 70%;
 }
 
-.line_Clinton {
-/*	stroke:rgb(80,80,80);*/
-	fill:none;
-	stroke-width:2px;
-}
+
 .area_Clinton {
-	fill-opacity:.6;
+	fill-opacity:.8;
 }
 
-.line_Trump {
-	stroke:rgb(80,80,80);
-	fill:none;
-	stroke-width:2px;
-}
 
 .area_Trump {
-	fill-opacity:.6;
+	fill-opacity:.8;
 }
 
 .axis-yT .tick line{
@@ -46,10 +37,18 @@ body {
 .axis-y .tick line{
 	stroke:gray;
 	stroke-width:0.2px;
+	opacity: 0.5;
 }
 .axis-y .domain{
-	display:none;
+	display: none;
+}
 
+.axis-x .domain{
+	display: none;
+}
+
+.axis-x .tick line{
+	stroke-width:0px;
 }
 
 .axisx-count .domain{
@@ -71,7 +70,7 @@ body {
 
 .olTrump{
 	width: 350px;
-	height: 350px;
+	height: 250px;
 	overflow:hidden; 
 	overflow-y:scroll;
 	font-size: 12px;
@@ -80,7 +79,7 @@ body {
 
 .olClinton{
     width: 350px;
-	height: 350px;
+	height: 250px;
 	overflow:hidden; 
 	overflow-y:scroll;
 	font-size: 12px;
@@ -113,4 +112,8 @@ body {
 .btn{
     border: none;
     opacity: 0.8;
+}
+
+.blank {
+	height: 10px;
 }
