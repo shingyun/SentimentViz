@@ -36,22 +36,51 @@ d3.queue()
 
 function dataLoaded(err, clinton, trump){
 
-  console.log(clinton);
-  console.log(trump);
-
-   var clintonByDate = d3.nest()
-       .key(function(clinton){return clinton.date.getFullYear()+'/'+clinton.date.getMonth()+'/'+clinton.date.getDate()})
-       .entries(clinton);
-   clintonByDate.sort();
-
-  var trumpByDate = d3.nest()
-      .key(function(trump){return trump.date.getFullYear()+'/'+trump.date.getMonth()+'/'+trump.date.getDate()})
-      .entries(trump);
-  trumpByDate.sort();
-
  drawTimeline(plot1,clinton,trump);
- drawSentiment(plot2,clinton, trump);
-// listTitle(plot3,clinton,trump);
+ // startSentiment(plot2,clinton, trump);
+ listTitle(plot3,clinton,trump);
+
+     //button Trump
+    d3.select('.btnT')
+      .on('click',function(d){
+     
+         if(d3.select(this).classed('hidedBtnT')){
+              d3.select(this).classed('hidedBtnT',false)
+                .html('Hide Trump');
+              d3.selectAll('.sent_Trump')
+                .transition()
+                .attr('r','5px');
+
+           }else{
+              d3.select(this).classed('hidedBtnT',true)
+                .html('Show Trump');
+              d3.selectAll('.sent_Trump')
+                .transition()
+                .attr('r','0px');
+              
+           }
+    })//btnT
+
+    //button Clinton
+    d3.select('.btnC')
+      .on('click',function(d){
+     
+         if(d3.select(this).classed('hidedBtnC')){
+              d3.select(this).classed('hidedBtnC',false)
+                .html('Hide Clinton');
+              d3.selectAll('.sent_Clinton')
+                .transition()
+                .attr('r','5px');
+
+           }else{
+              d3.select(this).classed('hidedBtnC',true)
+                .html('Show Clinton');
+              d3.selectAll('.sent_Clinton')
+                .transition()
+                .attr('r','0px');
+              
+           }
+    })//btnC
 
 }
 
@@ -77,11 +106,6 @@ function drawTimeline(plot, clinton, trump){
   var scaleYcountC = d3.scaleLinear()
       .domain([13,0])
       .range([h/2,h/4]);
-
-  // var line = d3.line()
-  //     .x(function(d){return scaleXtime(new Date((d.x1.valueOf()+d.x0.valueOf())/2))})
-  //     .y(function(d){return scaleYcount(d.length)})
-  //     .curve(d3.curveCardinal);;
 
   var areaT = d3.area()
     .x(function(d){return scaleXtime(new Date((d.x1.valueOf()+d.x0.valueOf())/2))})
@@ -143,40 +167,6 @@ function drawTimeline(plot, clinton, trump){
     drawSentiment(plot2,brushedClinton, brushedTrump, brushedArea);
     listTitle(plot3,brushedClinton,brushedTrump);
     
-    //button Trump
-    d3.select('.btnT')
-      .on('click',function(d){
-     
-         if(d3.select(this).classed('hidedBtnT')){
-              d3.select(this).classed('hidedBtnT',false)
-                .html('Hide Trump');
-              d3.selectAll('.sent_Trump').style('opacity',0.7);
-
-           }else{
-              d3.select(this).classed('hidedBtnT',true)
-                .html('Show Trump');
-              d3.selectAll('.sent_Trump').style('opacity',0);
-              
-           }
-    })//btnT
-
-    //button Clinton
-    d3.select('.btnC')
-      .on('click',function(d){
-     
-         if(d3.select(this).classed('hidedBtnC')){
-              d3.select(this).classed('hidedBtnC',false)
-                .html('Hide Clinton');
-              d3.selectAll('.sent_Clinton').style('opacity',0.7);
-
-           }else{
-              d3.select(this).classed('hidedBtnC',true)
-                .html('Show Clinton');
-              d3.selectAll('.sent_Clinton').style('opacity',0);
-              
-           }
-    })//btnC
-
   }
  
 
@@ -206,8 +196,198 @@ function drawTimeline(plot, clinton, trump){
     .attr('transform','translate(0,0)')
     .call(yAxisC);
 
-
 }
+
+
+
+// function startSentiment(plot,clinton,trump){
+
+//     var t0 = new Date(2016,3,1), t1 = new Date(2017,2,31);
+//         tThresholds = d3.timeDay.range(t0 ,t1,1);
+
+//     var histogramDate = d3.histogram()
+//        .domain([t0,t1])
+//        .value(function(d){return d.date})
+//        .thresholds(tThresholds);
+
+//    var scaleXtime = d3.scaleTime()
+//        .domain([t0,t1])
+//        .range([0,w]);
+
+//    var scaleYsent = d3.scaleLinear()
+//        .domain([-0.5, 0.6])
+//        .range([h/1.75,0]);
+
+//    var nodeC = plot.selectAll('.sent_Clinton')
+//        .data(clinton);
+
+//    var nodeCenter = nodeC.enter()
+//        .append('circle')
+//        .attr('class','sent_Clinton')
+//        .on('mouseenter',function(d){
+//             console.log(this);
+            
+//             d3.select(this).classed('highlightedC',true)
+//               .attr('r',15);
+
+//              dispatch.call('highlight',this,d.id);
+//              dispatch.on('highlight.stSentClinton',function(e){
+
+//                d3.selectAll('.titleClinton')
+//                  .filter(function(d){return e==d.id;})
+//                  .classed('selected',true);
+
+//                d3.selectAll('.score')
+//                  .html('Score: '+d.sentiment);
+
+//              });//dispatch.on
+
+//        })
+//        .on('mouseleave',function(d){
+//             d3.select(this).classed('highlightedC',false)
+//               .attr('r',5);
+
+//             d3.selectAll('.titleClinton')
+//               .classed('selected',false);
+
+//        });
+
+//    nodeC.merge(nodeCenter)
+//         .attr('r','5px')
+//         .style('opacity',.7)
+//         .style('fill','#232066');
+   
+//    nodeC.exit().remove();
+
+
+//  var simulationC = d3.forceSimulation(clinton);
+
+//  var chargeForce = d3.forceManyBody()
+//     .strength(0);// -30 is by defult(for forceManyBody)
+
+//  var forceX = d3.forceX()
+//     .x(function(d){return scaleXtime(d.date)});
+
+//  var forceY = d3.forceY()
+//     .y(function(d){return scaleYsent(d.sentiment)}); //向 y=h/2靠近
+
+//  var collide = d3.forceCollide()// collide 讓所有elements都不重疊
+//     .radius(3);
+
+// simulationC
+//         .force('charge',chargeForce)
+//         .force('positionX',forceX)
+//         .force('positionY',forceY)
+//         .force('collide',collide)
+//         .alpha(1)
+//         .restart()
+//         .on('tick.position',function(){
+          
+//           plot.selectAll('.sent_Clinton')
+//               .attr('transform',function(d){ 
+//            return 'translate('+ d.x+','+ d.y+')'});
+//          })
+//         .on('end',function(){
+//             console.log('simulation end');
+//         });
+
+
+// //Trump
+//    var nodeT = plot.selectAll('.sent_Trump')
+//        .data(trump)
+
+//    var nodeTenter = nodeT.enter()
+//        .append('circle')
+//        .attr('class','sent_Trump')
+//        .on('mouseenter',function(d){
+//             console.log(this);
+            
+//             d3.select(this).classed('highlightedT',true)
+//               .attr('r',15);
+
+//              dispatch.call('highlight',this,d.id);
+//              dispatch.on('highlight.stSentTrump',function(e){
+
+//                d3.selectAll('.titleTrump')
+//                  .filter(function(d){return e==d.id;})
+//                  .classed('selected',true);
+
+//                d3.selectAll('.score')
+//                  .html('Score: '+d.sentiment);
+
+//              });//dispatch.on
+
+//        })
+//        .on('mouseleave',function(d){
+//             d3.select(this).classed('highlightedT',false)
+//               .attr('r',5);
+
+//             d3.selectAll('.titleTrump')
+//               .classed('selected',false);
+
+//        });
+
+//    nodeT.merge(nodeTenter)
+//         .attr('r','5px')
+//         .style('opacity',.7)
+//         .style('fill','#E91D0E');
+       
+//    nodeT.exit().remove();
+
+
+//    var simulationT = d3.forceSimulation(trump);
+
+//    var chargeForce = d3.forceManyBody()
+//     .strength(0);// -30 is by defult(for forceManyBody)
+
+//    var forceX = d3.forceX()
+//     .x(function(d){return scaleXtime(d.date)});
+
+//    var forceY = d3.forceY()
+//     .y(function(d){return scaleYsent(d.sentiment)}); //向 y=h/2靠近
+
+//    var collide = d3.forceCollide()// collide 讓所有elements都不重疊
+//     .radius(3);
+
+//   simulationT
+//         .force('charge',chargeForce)
+//         .force('positionX',forceX)
+//         .force('positionY',forceY)
+//         .force('collide',collide)
+//         .alpha(1)
+//         .restart()
+//         .on('tick',function(){
+          
+//           plot.selectAll('.sent_Trump')
+//               .attr('transform',function(d){ 
+//            return 'translate('+ d.x+','+ d.y+')'});
+//          })
+//         .on('end',function(){
+//             console.log('simulation end');
+//         });
+
+
+//   //Axis
+//   var xAxis = d3.axisBottom()
+//       .scale(scaleXtime)
+//       .tickValues(null)
+//       .tickFormat(null)
+//       .ticks(d3.timeMonth.every(1));
+
+//   var yAxis = d3.axisLeft()
+//       .tickSize(-w)
+//       // .tickValues(d3.range(0,20,5))
+//       .scale(scaleYsent);
+
+//   plot.insert('g','circle')
+//       .attr('class','axis axis-x')
+//       .attr('transform','translate(0,'+(h/1.75)+')')
+//       .call(xAxis);
+//   plot.insert('g','circle').attr('class','axis axis-y') //line is "inserted" before area
+//       .attr('transform','translate(0,0)') 
+//       .call(yAxis);
+
+// }//startSentiment
 
 
 
@@ -223,8 +403,6 @@ function drawSentiment(plot,clinton,trump, brush){
 
    d3.select('.axis-x').remove();
 
-   // console.log(trump);
-   // console.log(clinton);
    
    var t0 = new Date(brush[0].getFullYear(),brush[0].getMonth(),brush[0].getDate());
        t1 = new Date(brush[1].getFullYear(),brush[1].getMonth(),brush[1].getDate());
@@ -247,11 +425,44 @@ function drawSentiment(plot,clinton,trump, brush){
 
    var nodeCenter = nodeC.enter()
        .append('circle')
-       .attr('class','sent_Clinton');
+       .attr('class','sent_Clinton')
+       .on('mouseenter',function(d){
+            
+            d3.select(this).classed('highlightedC',true)
+              .attr('r',15);
+
+             
+
+
+
+             dispatch.call('highlight',this,d.id);
+             dispatch.on('highlight.sentClinton',function(e){
+              
+               d3.selectAll('.titleClinton')
+                 .filter(function(d){
+                  return e==d.id;})
+                 .classed('selectedC',true);
+
+               var li = document.getElementById(e);
+              li.scrollIntoView(true);
+
+
+               d3.selectAll('.score')
+                 .html('Score: '+d.sentiment);
+
+             });//dispatch.on
+
+       })
+       .on('mouseleave',function(d){
+            d3.select(this).classed('highlightedC',false)
+              .attr('r',5);
+
+            d3.selectAll('.titleClinton')
+              .classed('selectedC',false);
+
+       });
 
    nodeC.merge(nodeCenter)
-        // .attr('cx',function(d){return scaleXtime(d.date)})
-        // .attr('cy',function(d){return scaleYsent(d.sentiment)})
         .attr('r','5px')
         .style('opacity',.7)
         .style('fill','#232066');
@@ -259,23 +470,21 @@ function drawSentiment(plot,clinton,trump, brush){
    nodeC.exit().remove();
 
  
+   var simulationC = d3.forceSimulation(clinton);
 
-
- var simulationC = d3.forceSimulation(clinton);
-
- var chargeForce = d3.forceManyBody()
+   var chargeForce = d3.forceManyBody()
     .strength(0);// -30 is by defult(for forceManyBody)
 
- var forceX = d3.forceX()
+   var forceX = d3.forceX()
     .x(function(d){return scaleXtime(d.date)});
 
- var forceY = d3.forceY()
+   var forceY = d3.forceY()
     .y(function(d){return scaleYsent(d.sentiment)}); //向 y=h/2靠近
 
- var collide = d3.forceCollide()// collide 讓所有elements都不重疊
+   var collide = d3.forceCollide()// collide 讓所有elements都不重疊
     .radius(3);
 
-simulationC
+  simulationC
         .force('charge',chargeForce)
         .force('positionX',forceX)
         .force('positionY',forceY)
@@ -299,11 +508,35 @@ simulationC
 
    var nodeTenter = nodeT.enter()
        .append('circle')
-       .attr('class','sent_Trump');
+       .attr('class','sent_Trump')
+       .on('mouseenter',function(d){
+ 
+            d3.select(this).classed('highlightedT',true)
+              .attr('r',15);
+
+             dispatch.call('highlight',this,d.id);
+             dispatch.on('highlight.sentTrump',function(e){
+
+               d3.selectAll('.titleTrump')
+                 .filter(function(d){return e==d.id;})
+                 .classed('selectedT',true);
+
+               d3.selectAll('.score')
+                 .html('Score: '+d.sentiment);
+
+             });//dispatch.on
+
+       })
+       .on('mouseleave',function(d){
+            d3.select(this).classed('highlightedT',false)
+              .attr('r',5);
+
+            d3.selectAll('.titleTrump')
+              .classed('selectedT',false);
+
+       });
 
    nodeT.merge(nodeTenter)
-        // .attr('cx',function(d){return scaleXtime(d.date)})
-        // .attr('cy',function(d){return scaleYsent(d.text)})
         .attr('r','5px')
         .style('opacity',.7)
         .style('fill','#E91D0E');
@@ -311,21 +544,21 @@ simulationC
    nodeT.exit().remove();
 
 
- var simulationT = d3.forceSimulation(trump);
+   var simulationT = d3.forceSimulation(trump);
 
- var chargeForce = d3.forceManyBody()
+   var chargeForce = d3.forceManyBody()
     .strength(0);// -30 is by defult(for forceManyBody)
 
- var forceX = d3.forceX()
+   var forceX = d3.forceX()
     .x(function(d){return scaleXtime(d.date)});
 
- var forceY = d3.forceY()
+   var forceY = d3.forceY()
     .y(function(d){return scaleYsent(d.sentiment)}); //向 y=h/2靠近
 
- var collide = d3.forceCollide()// collide 讓所有elements都不重疊
+   var collide = d3.forceCollide()// collide 讓所有elements都不重疊
     .radius(3);
 
-simulationT
+  simulationT
         .force('charge',chargeForce)
         .force('positionX',forceX)
         .force('positionY',forceY)
@@ -359,17 +592,16 @@ simulationT
       .attr('class','axis axis-x')
       .attr('transform','translate(0,'+(h/1.75)+')')
       .call(xAxis);
-  plot.append('g').attr('class','axis axis-y') //line is "inserted" before area
+  plot.insert('g','circle').attr('class','axis axis-y') //line is "inserted" before area
       .attr('transform','translate(0,0)') 
       .call(yAxis);
 
-}
+}//drawSentiment
 
 
 //Title
 function listTitle(plot,clinton,trump){
 
-  
   //trump's title
   t = plot3titleT.select('.olTrump')
   .selectAll('.titleTrump')
@@ -380,14 +612,21 @@ function listTitle(plot,clinton,trump){
   .attr('class','titleTrump');
 
   t.merge(tEnter)
-  .html(function(d){return d.title;})
-  .on('mouseenter',function(d){
-    console.log(this);
-     d3.select(this)
-       .classed('selected',true);
+  .html(function(d){return d.title;});
 
-      dispatch.call('highlight',this,d.id);
-      dispatch.on('highlight.titletrump',function(e){
+  t.exit().remove();
+
+  d3.selectAll('.titleTrump')
+    .on('mouseenter',function(d){
+   
+       d3.select('.btnT').classed('hidedBtnT',false)
+         .html('Hide Trump');
+       
+       d3.select(this)
+         .classed('selectedT',true);
+
+       dispatch.call('highlight',this,d.id);
+       dispatch.on('highlight.titletrump',function(e){
 
         d3.selectAll('.sent_Trump')
           .filter(function(d){return e==d.id;})
@@ -402,7 +641,7 @@ function listTitle(plot,clinton,trump){
   })
   .on('mouseleave',function(d){
     d3.select(this)
-      .classed('selected',false);
+      .classed('selectedT',false);
 
     d3.selectAll('.sent_Trump')
       .classed('highlightedT',false)
@@ -413,8 +652,6 @@ function listTitle(plot,clinton,trump){
 
   });
 
-  t.exit().remove();
-
   
   //Clinton's title
   c = plot3titleC.select('.olClinton')
@@ -423,21 +660,25 @@ function listTitle(plot,clinton,trump){
 
   cEnter = c.enter()
   .append('li')
-  .attr('class','titleClinton');
+  .attr('class','titleClinton')
+  .attr('id',function(d){return d.id});
 
   c.merge(cEnter)
   .html(function(d){return d.title;})
   .on('mouseenter',function(d){
 
+     d3.select('.btnC').classed('hidedBtnC',false)
+         .html('Hide Clinton');
+
      d3.select(this)
-       .classed('selected',true);
+       .classed('selectedC',true);
 
      d3.selectAll('.score')
        .html('Score: '+d.sentiment);
 
      dispatch.call('highlight',this,d.id);
      dispatch.on('highlight.titleclinton',function(e){
-
+      
       d3.selectAll('.sent_Clinton')
         .filter(function(d){return e==d.id;})
         .classed('highlightedC',true)
@@ -448,7 +689,7 @@ function listTitle(plot,clinton,trump){
   })
   .on('mouseleave',function(d){
     d3.select(this)
-      .classed('selected',false);
+      .classed('selectedC',false);
     
     d3.selectAll('.sent_Clinton')
       .classed('highlightedC',false)
@@ -464,29 +705,6 @@ function listTitle(plot,clinton,trump){
 
 
 }
-
-
-
-
-//Show and Hide
-// d3.select('.bT')
-//   .on('click',function(){
-
-//     if(d3.selectAll('.sent_Trump').classed('selectedCircle')){
-//       d3.selectAll('.sent_Trump').classed('selectedCircle',false)
-//         .style('opacity',0.6);
-
-//       d3.select('.bT').html('Hide Trump');
-//     }else{
-
-
-//       d3.selectAll('.sent_Trump').classed('selectedCircle',true)
-//         .style('opacity',0);
-
-//       d3.select('.bT').html('Show Trump');
-//     }
-    
-//   })
 
 
 

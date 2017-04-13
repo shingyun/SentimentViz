@@ -65,7 +65,7 @@ body {
 	position: absolute;
 	right: 20px;
 	top:100px;
-	width: 400px;
+	width: 30%;
 	height: 600px;
 }
 
@@ -87,10 +87,16 @@ body {
 	left: 10px;
 }
 
-.selected{
-	color: #3AB795;
+.selectedC{
+	color: #232066;
 	font-weight: bold;
 }
+
+.selectedT{
+	color: #E91D0E;
+	font-weight: bold;
+}
+
 
 
 .highlightedT{
