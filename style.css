@@ -3,6 +3,26 @@ body {
 	background-color: #E6E8E6;
 }
 
+h2 {
+	color: #494850;
+}
+
+h4 {
+	color: #494850;
+}
+
+ol {
+	color: #494850;
+}
+
+.intro {
+	color: #494850;
+}
+
+.score {
+	color: #494850;
+}
+
 .canvas {
 	width: 70%;
 }
@@ -63,7 +83,7 @@ body {
 .plot3 {
 	position: absolute;
 	right: 20px;
-	top:100px;
+	top:200px;
 	width: 30%;
 	height: 600px;
 }
