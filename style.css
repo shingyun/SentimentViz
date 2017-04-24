@@ -3,12 +3,66 @@ body {
 	background-color: #E6E8E6;
 }
 
+.container {
+	margin-top:20px;
+}
+
 h2 {
 	color: #494850;
 }
 
 h4 {
 	color: #494850;
+	position: relative;
+	float: left;
+	padding: 0px 5px;
+}
+
+.brushHint {
+    position: relative;
+	float: left;
+	padding: 10px 10px;
+	margin-bottom: 0px;
+}
+
+.button{
+	position: relative;
+	float: left;
+    opacity: 0.8;
+    margin-right: 5px;
+    margin-left: 5px;
+    width:120px;
+    height: 35px;
+    padding: 10px 5px;
+    vertical-align: middle;
+}
+
+.button:hover{
+	cursor: pointer;
+}
+
+.btnT{
+    border-bottom: 3px solid #E91D0E;
+}
+
+.btnC{
+    border-bottom: 3px solid #232066;
+}
+
+.hidedBtnT{
+    border-bottom: 1px solid #E91D0E;
+}
+
+.hidedBtnC{
+    border-bottom: 1px solid #232066;
+}
+
+.score {
+	color: #494850;
+	position: relative;
+	float: left;
+	padding: 10px 10px;
+
 }
 
 ol {
@@ -17,10 +71,7 @@ ol {
 
 .intro {
 	color: #494850;
-}
-
-.score {
-	color: #494850;
+	width: 55%;
 }
 
 .canvas {
@@ -83,27 +134,47 @@ ol {
 .plot3 {
 	position: absolute;
 	right: 20px;
-	top:200px;
+	top:120px;
 	width: 30%;
 	height: 600px;
 }
 
+.spanT{
+    border-bottom: 3px solid #E91D0E;
+}
+
+.spanC{
+    border-bottom: 3px solid #232066;
+}
+
+.title{
+	padding: 5px 15px;
+}
+
 .olTrump{
-	width: 350px;
-	height: 250px;
+	width: 325px;
+	height: 230px;
 	overflow:hidden; 
 	overflow-y:scroll;
 	font-size: 12px;
 	left: 10px;
 }
 
+.olTrump:hover{
+	cursor: default;
+}
+
 .olClinton{
-    width: 350px;
-	height: 250px;
+    width: 325px;
+	height: 230px;
 	overflow:hidden; 
 	overflow-y:scroll;
 	font-size: 12px;
 	left: 10px;
+}
+
+.olClinton:hover{
+	cursor: default;
 }
 
 .selectedC{
@@ -117,7 +188,6 @@ ol {
 }
 
 
-
 .highlightedT{
 	stroke: #3AB795;
 	stroke-width: 5px;
@@ -129,11 +199,52 @@ ol {
 	stroke-width: 5px;
 }
 
-.btn{
-    border: none;
-    opacity: 0.8;
-}
 
 .blank {
-	height: 10px;
+	height: 15px;
 }
+
+span.about{
+	border-bottom: 1px solid #3AB795;
+}
+
+span.about:hover{
+	cursor: pointer;
+}
+
+.aboutContent {
+	display: none;
+	position: fixed;
+	z-index: 999999;
+	left: 325px;
+	top: 150px;
+	width:50%;
+	height: 60%;
+    overflow: auto;
+    background-color: white;
+    opacity: 0.9;
+    position: fixed;
+    background-color: #fefefe;
+    width: 50%;
+    padding: 20px 40px;
+    color:#666666;
+
+}
+
+.close{
+	color: black;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+
+
+
