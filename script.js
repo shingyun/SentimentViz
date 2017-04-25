@@ -529,6 +529,9 @@ function listTitle(plot,clinton,trump){
       d3.selectAll('.score')
         .html('Score: '+d.sentiment + '  ' +sent);
   })
+  .on('click',function(d){
+     window.open(d.url, '_blank');
+  })
   .on('mouseleave',function(d){
     d3.select(this)
       .classed('selectedT',false);
@@ -587,6 +590,9 @@ function listTitle(plot,clinton,trump){
     d3.selectAll('.score')
         .html('Score: '+d.sentiment + '  ' +sent);
 
+  })
+  .on('click',function(d){
+     window.open(d.url, '_blank');
   })
   .on('mouseleave',function(d){
     d3.select(this)
