@@ -28,7 +28,7 @@ var plot3titleC = d3.select('.plot3')
 
 var dispatch = d3.dispatch('highlightCircle','hightlightTitle');
 
-var sent;
+var sent, brushAll;
 
 //about block
 d3.select('.about')
@@ -106,7 +106,6 @@ function drawTimeline(plot, clinton, trump){
 
   var t0 = new Date(2016,3,1), t1 = new Date(2017,2,31);
       tThresholds = d3.timeDay.range(t0,t1,1);//interval.range(start, stop[, step]
-
 
  //histogram
   var histogramDate = d3.histogram()
@@ -336,8 +335,8 @@ function drawSentiment(plot,clinton,trump, brush){
    
    nodeC.exit().remove();
 
-   // var chargeForceC = d3.forceManyBody()
-   //  .strength(0);// -30 is by defult(for forceManyBody)
+   var chargeForceC = d3.forceManyBody()
+    .strength(0);// -30 is by defult(for forceManyBody)
 
    var forceXC = d3.forceX()
     .x(function(d){return scaleXtime(d.date)});
@@ -353,7 +352,7 @@ function drawSentiment(plot,clinton,trump, brush){
    }
 
   simulationC
-      // .force('charge',chargeForceC)
+        .force('charge',chargeForceC)
         .force('positionX',forceXC)
         .force('positionY',forceYC)
         .force('collide',collideC)
@@ -472,7 +471,7 @@ function drawSentiment(plot,clinton,trump, brush){
 
   plot.append('g')
       .attr('class','axis axis-x')
-      .attr('transform','translate(0,'+(h/2+20)+')')
+      .attr('transform','translate(0,'+(h/2+10)+')')
       .call(xAxis);
   plot.insert('g','circle').attr('class','axis axis-y') //line is "inserted" before area
       .attr('transform','translate(0,0)') 
