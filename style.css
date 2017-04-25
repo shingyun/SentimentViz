@@ -134,7 +134,7 @@ ol {
 .plot3 {
 	position: absolute;
 	right: 20px;
-	top:120px;
+	top:130px;
 	width: 30%;
 	height: 600px;
 }
@@ -217,9 +217,9 @@ span.about:hover{
 	position: fixed;
 	z-index: 999999;
 	left: 325px;
-	top: 150px;
+	top: 125px;
 	width:50%;
-	height: 60%;
+	height: 75%;
     overflow: auto;
     background-color: white;
     opacity: 0.9;
