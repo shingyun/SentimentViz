@@ -261,7 +261,7 @@ function drawSentiment(plot,clinton,trump, brush){
       .attr('class','sentText')
       .attr('x',-20)
       .attr('y',10)
-      .text('Sentiment score from 0.5 (prone to be positive) to -0.5 (prone to be negative)')
+      .text('Sentiment score: 0 is neutral. The closer to .5, the more positive; the closer to -.5, the more negative.')
       .style('fill','#494850');
 
 //histogram
