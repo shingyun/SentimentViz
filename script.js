@@ -30,6 +30,14 @@ var dispatch = d3.dispatch('highlightCircle','hightlightTitle');
 
 var sent, brushAll;
 
+var tooltip = d3.select('.score')
+                .style('color','white')
+                .style('opacity',0.8)
+                .style('width','100px')
+                .style('background','#494850');
+
+var f = d3.format('.2f');
+
 //about block
 d3.select('.about')
   .on('click',function(){
@@ -63,7 +71,7 @@ function dataLoaded(err, clinton, trump){
      
          if(d3.select(this).classed('hidedBtnT')){
               d3.select(this).classed('hidedBtnT',false)
-                .html('Trump selected');
+                .html('Trump');
               d3.selectAll('.sent_Trump')
                 .transition()
                 .attr('r','5px');
@@ -84,7 +92,7 @@ function dataLoaded(err, clinton, trump){
      
          if(d3.select(this).classed('hidedBtnC')){
               d3.select(this).classed('hidedBtnC',false)
-                .html('Clinton selected');
+                .html('Clinton');
               d3.selectAll('.sent_Clinton')
                 .transition()
                 .attr('r','5px');
@@ -242,11 +250,11 @@ function drawSentiment(plot,clinton,trump, brush){
 
    d3.select('.btnT')
      .classed('hidedBtnT',false)
-     .html('Trump selected');
+     .html('Trump');
 
    d3.select('.btnC')
      .classed('hidedBtnC',false)
-     .html('Clinton selected');
+     .html('Clinton');
 
    d3.select('.axis-x').remove();
    d3.select('.axis-y').remove();
@@ -299,21 +307,26 @@ function drawSentiment(plot,clinton,trump, brush){
                  .classed('selectedC',function(d){ return e == d.id; });
 
                var li = document.getElementById(e);
-               console.log("li", li);
                li.scrollIntoView(true);
 
              });//dispatch.on
 
             if(d.sentiment > 0){
                 sent = 'Positive';
-               } else if (d.sentiment <0){
+               } else if (d.sentiment < 0){
                 sent = 'Negative';
                } else {
                 sent = 'Neutral'
                }
 
-            d3.selectAll('.score')
-                 .html('Score: '+d.sentiment+'  '+sent);
+            tooltip.style('visibility','visible')
+                   .html('Score: '+f(d.sentiment)+'  '+sent);
+
+       })
+       .on('mousemove',function(d){
+            var xy = d3.mouse(d3.select('.container').node());
+            tooltip.style('left',xy[0]+30+'px')
+                   .style('top',xy[1]+30+'px')
 
        })
        .on('mouseleave',function(d){
@@ -323,8 +336,9 @@ function drawSentiment(plot,clinton,trump, brush){
             d3.selectAll('.titleClinton')
               .classed('selectedC',false);
 
-            d3.selectAll('.score')
-              .html('Score');
+            tooltip
+            .transition()
+            .style('visibility','hidden');
 
        });
 
@@ -399,9 +413,14 @@ function drawSentiment(plot,clinton,trump, brush){
                } else {
                 sent = 'Neutral'
                }
+           tooltip.style('visibility','visible')
+                   .html('Score: '+f(d.sentiment)+'  '+sent);
 
-           d3.selectAll('.score')
-                 .html('Score: '+d.sentiment + '  '+sent);
+       })
+       .on('mousemove',function(d){
+            var xy = d3.mouse(d3.select('.container').node());
+            tooltip.style('left',xy[0]+30+'px')
+                   .style('top',xy[1]+30+'px')
 
        })
        .on('mouseleave',function(d){
@@ -411,8 +430,9 @@ function drawSentiment(plot,clinton,trump, brush){
             d3.selectAll('.titleTrump')
               .classed('selectedT',false);
 
-            d3.selectAll('.score')
-              .html('Score');
+            tooltip
+            .transition()
+            .style('visibility','hidden');
 
        });
   
@@ -502,7 +522,7 @@ function listTitle(plot,clinton,trump){
     .on('mouseenter',function(d){
    
        d3.select('.btnT').classed('hidedBtnT',false)
-         .html('Trump selected');
+         .html('Trump');
        
        d3.select(this)
          .classed('selectedT',true);
@@ -526,8 +546,14 @@ function listTitle(plot,clinton,trump){
           sent = 'Neutral'
          }
 
-      d3.selectAll('.score')
-        .html('Score: '+d.sentiment + '  ' +sent);
+     tooltip.style('visibility','visible')
+            .html('Score: '+f(d.sentiment)+'  '+sent);
+  })
+  .on('mousemove',function(d){
+      var xy = d3.mouse(d3.select('.container').node());
+      tooltip.style('left',xy[0]+30+'px')
+             .style('top',xy[1]+30+'px')
+
   })
   .on('click',function(d){
      window.open(d.url, '_blank');
@@ -540,8 +566,9 @@ function listTitle(plot,clinton,trump){
       .classed('highlightedT',false)
       .attr('r',5);
     
-    d3.selectAll('.score')
-      .html('Score');
+    tooltip
+    .transition()
+    .style('visibility','hidden');
 
   });
 
@@ -562,7 +589,7 @@ function listTitle(plot,clinton,trump){
   .on('mouseenter',function(d){
 
      d3.select('.btnC').classed('hidedBtnC',false)
-         .html('Clinton selected');
+         .html('Clinton');
 
      d3.select(this)
        .classed('selectedC',true);
@@ -587,12 +614,18 @@ function listTitle(plot,clinton,trump){
           sent = 'Neutral'
          }
 
-    d3.selectAll('.score')
-        .html('Score: '+d.sentiment + '  ' +sent);
+     tooltip.style('visibility','visible')
+            .html('Score: '+f(d.sentiment)+'  '+sent);
 
   })
   .on('click',function(d){
      window.open(d.url, '_blank');
+  })
+  .on('mousemove',function(d){
+      var xy = d3.mouse(d3.select('.container').node());
+      tooltip.style('left',xy[0]+30+'px')
+             .style('top',xy[1]+30+'px')
+
   })
   .on('mouseleave',function(d){
     d3.select(this)
@@ -602,13 +635,13 @@ function listTitle(plot,clinton,trump){
       .classed('highlightedC',false)
       .attr('r',5);
     
-    d3.selectAll('.score')
-      .html('Score');
+    tooltip
+    .transition()
+    .style('visibility','hidden');
 
   });
 
 }
-
 
 
 function parseC(d){
